@@ -38,5 +38,8 @@ public class Main {
         //id=108、情報削除、id=108は存在しない
         productService.delete(108);
 
+        //データベースを閉じる
+        productService.closeConnection();
+
     }
 }
