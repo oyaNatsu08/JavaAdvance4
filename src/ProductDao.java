@@ -15,7 +15,7 @@ public class ProductDao {
     public ProductRecord findById(int id) {
         final var sql = "SELECT id, name, price FROM products WHERE id = ?";
 
-        try (PreparedStatement stmt = this.con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = this.con.prepareStatement(sql)) {     // tryの()内にPreparedStatementを書く場合は、明示的にcloseする必要はない
             stmt.setInt(1, id);
 
             ResultSet rs = stmt.executeQuery();
