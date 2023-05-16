@@ -4,9 +4,10 @@ import java.util.List;
 
 public class ProductService {
     private ProductDao dao;
+    private Connection connection;
 
     public ProductService() {
-        Connection connection = DbUtil.getConnection();
+        this.connection = DbUtil.getConnection();
         this.dao = new ProductDao(connection);
     }
 
@@ -37,7 +38,7 @@ public class ProductService {
 
     }
 
-    public int insert(ProductRecord product) {
+    public int insert(ProductRecord product) throws SQLException {
         try {
             var productDao = dao;
 
@@ -45,6 +46,8 @@ public class ProductService {
 
         } catch (RuntimeException e) {
             throw new RuntimeException();
+        } catch (SQLException e) {
+            throw new SQLException(e);
         }
     }
 
@@ -60,6 +63,18 @@ public class ProductService {
         var productDao = dao;
         return productDao.delete(id);
 
+    }
+
+    //クローズ処理
+    public void closeConnection() {
+        try {
+            if (connection != null) {
+                connection.close();
+                //System.out.println("データベースを閉じます");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

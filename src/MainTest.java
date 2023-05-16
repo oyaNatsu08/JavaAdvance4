@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
@@ -17,6 +19,7 @@ class MainTest {
 
     @AfterEach
     void tearDown() {
+        productService.closeConnection();
     }
 
     @Test
@@ -48,13 +51,13 @@ class MainTest {
     }
 
     @Test
-    public void insert_success() {
+    public void insert_success() throws SQLException {
         //id=104、追加
         productService.insert(new ProductRecord(104, "定規", 100));
     }
 
     @Test
-    public void insert_error() {
+    public void insert_error() throws SQLException {
         //id=104、追加、既にある場合
         productService.insert(new ProductRecord(104, "定規", 100));
     }

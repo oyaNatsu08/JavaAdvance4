@@ -55,7 +55,7 @@ public class ProductDao {
 
     }
 
-    public int insert(ProductRecord product) {
+    public int insert(ProductRecord product) throws SQLException {
         var id = product.id();
         var name = product.name();
         var price = product.price();
@@ -71,7 +71,7 @@ public class ProductDao {
             return stmt.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new SQLException();
         }
 
     }
